@@ -1,0 +1,99 @@
+{% extends "index.html" %}
+{% block section %}
+<div class="container-xl">
+  <div class="card card-md">
+    <div class="card-body">
+      <h2 class="h2 text-center mb-4">Add New Meeting</h2>
+      <form method="post" autocomplete="off" novalidate>
+        {% csrf_token %}
+        <div class="mb-3">
+          <label class="form-label">Meeting Name</label>
+          <input type="fname" name="mname" class="form-control" placeholder="Monday Lecture 1" autocomplete="off">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Meeting Time</label>
+            <select type="text" class="form-select" name="mtime" placeholder="Select timing" id="select-tags"  single>
+              <option value="9:30 - 10:30">9:30 - 10:30</option>
+              <option value="10:30 - 11:30">10:30 - 11:30</option>
+              <option value="11:30 - 12:30">11:30 - 12:30</option>
+              <option value="1:30 - 2:30">1:30 - 2:30</option>
+              <option value="2:30 - 3:30">2:30 - 3:30</option>
+              <option value="3:30 - 4:30">3:30 - 4:30</option>
+              <option value="4:30 - 5:30">4:30 - 5:30</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Day of the week</label>
+            <select type="text" class="form-select" name="mday" placeholder="Select tags" id="select-tags"  single>
+              <option value="Monday">Monday</option>
+              <option value="Tuesday">Tuesday</option>
+              <option value="Wednesday">Wednesday</option>
+              <option value="Thursday">Thursday</option>
+              <option value="Friday">Friday</option>
+              <option value="Saturday">Saturday</option>
+              <option value="Sunday">Sunday</option>
+            </select>
+          </div>
+          <div class="form-footer content-center">
+            <button type="submit" class="btn btn-primary w-2/4 ">Add New Meeting</button>
+          </div>
+      </form>
+    </div>
+   
+  </div>
+</div>
+<div class="container-xl mt-5">
+    <div class="card">
+      <div class="card-body">
+        <div id="table-default" class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th class="table-label" >Meeting ID</th>
+                <th class="table-label" >Meeting Name</th>
+                <th class="table-label" >Meeting Time</th>
+                <th class="table-label" >Meeting Day</th>
+                <th class="table-label" >Delete</th>
+              </tr>
+            </thead>
+            <tbody class="table-tbody">
+              {% for meeting in all_meetings %}
+              <tr>
+                <td class="sort-id">
+                    <div class="mb-3">
+                    {{meeting.id}}
+                    </div>
+                </td>
+                <td class="sort-id">
+                    <div class="mb-3">
+                    {{meeting.meeting_name}}
+                    </div>
+                </td>
+                <td class="sort-name">
+                    <div class="mb-3">
+                        {{meeting.meeting_time}}
+                    </div>
+                </td>
+                <td class="sort-name">
+                    <div class="mb-3">
+                        {{meeting.meeting_day}}
+                    </div>
+                </td>
+                <td class="sort-city">
+                    <form method="post" autocomplete="off" novalidate>
+                      {% csrf_token %}
+                        <div class="mb-3">
+                            <input type = "hidden" name='request_from_delete' value = {{meeting.id}} />
+                            <button type="submit" class="btn btn-primary w-3/4">Delete Meeting</button>
+                          </div>
+                    </form> 
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock section %}

@@ -1,0 +1,81 @@
+{% extends "index.html" %}
+{% block section %}
+<div class="container-xl">
+  <div class="card card-md">
+    <div class="card-body">
+      <h2 class="h2 text-center mb-4">Add New Department</h2>
+      <form method="post" autocomplete="off" novalidate>
+        {% csrf_token %}
+        <div class="mb-3">
+          <label class="form-label">Department Name</label>
+          <input type="fname" name="dname" class="form-control" placeholder="Suraj" autocomplete="off">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Corrosponding Courses</label>
+            <select type="text" class="form-select" name="dcourses" placeholder="Select tags" id="select-tags" multiple>
+              {% for course in all_courses %}
+              <option value={{course.id}}>{{course}}</option>
+              {% endfor %}
+            </select>
+          </div>
+        <div class="form-footer content-center">
+          <button type="submit" class="btn btn-primary w-2/4 ">Add New Department</button>
+        </div>
+      </form>
+    </div>
+   
+  </div>
+</div>
+<div class="container-xl mt-5">
+    <div class="card">
+      <div class="card-body">
+        <div id="table-default" class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th class="table-label" >Department Unique ID</th>
+                <th class="table-label" >Department Name</th>
+                <th class="table-label" >Department Courses</th>
+                <th class="table-label" >Delete</th>
+              </tr>
+            </thead>
+            <tbody class="table-tbody">
+              {% for departmet in all_depts %}
+              <tr>
+                <td class="sort-id">
+                    <div class="mb-3">
+                    {{departmet.id}}
+                    </div>
+                </td>
+                <td class="sort-id">
+                    <div class="mb-3">
+                    {{departmet.dept_name}}
+                    </div>
+                </td>
+                <td class="sort-id">
+                  <div class="mb-3">
+                    {% for course in departmet.courses.all %}
+                    {{course}},
+                    {% endfor %}
+                 
+                  </div>
+              </td>
+                <td class="sort-city">
+                    <form method="post" autocomplete="off" novalidate>
+                      {% csrf_token %}
+                        <div class="mb-3">
+                            <input type = "hidden" name = "request_from_delete" value={{departmet.id}} />
+                            <button type="submit" class="btn btn-primary w-3/4">Delete Department</button>
+                          </div>
+                    </form> 
+                </td>
+              </tr>
+              {% endfor %}
+             
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock section %}

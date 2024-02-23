@@ -1,0 +1,73 @@
+{% extends "index.html" %}
+{% block section %}
+<div class="container-xl">
+  <div class="card card-md">
+    <div class="card-body">
+      <h2 class="h2 text-center mb-4">Add New Teacher</h2>
+      <form method="post" autocomplete="off" novalidate>
+        {% csrf_token %}  
+        <div class="mb-3">
+          <label class="form-label">First Name</label>
+          <input type="fname" name="fname" class="form-control" placeholder="Suraj" autocomplete="off">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Last Name</label>
+            <input type="lname" name="lname" class="form-control" placeholder="Suraj" autocomplete="off">
+          </div>
+        <div class="form-footer content-center">
+          <button type="submit" class="btn btn-primary w-2/4 ">Add New Teacher</button>
+        </div>
+      </form>
+    </div>
+   
+  </div>
+</div>
+<div class="container-xl mt-5">
+    <div class="card">
+      <div class="card-body">
+        <div id="table-default" class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th class="table-label" >Teacher Unique ID</th>
+                <th class="table-label" >First Name</th>
+                <th class="table-label" >Last Name</th>
+                <th class="table-label" >Delete</th>
+              </tr>
+            </thead>
+            <tbody class="table-tbody">
+              {% for teacher in all_teacher %}
+              <tr>
+                <td class="sort-id">
+                    <div class="mb-3">
+                    {{teacher.id}}
+                    </div>
+                </td>
+                <td class="sort-id">
+                    <div class="mb-3">
+                    {{teacher.first_name}}
+                    </div>
+                </td>
+                <td class="sort-name">
+                    <div class="mb-3">
+                        {{teacher.last_name}}
+                    </div></td>
+                <td class="sort-city">
+                    <form method="post" autocomplete="off" novalidate>
+                      {% csrf_token %}
+                        <div class="mb-3">
+                            <input type = "hidden" name = 'request_from_delete' value={{teacher.id}} />
+                            <button type="submit" class="btn btn-primary w-3/4">Delete Teacher</button>
+                          </div>
+                    </form> 
+                </td>
+              </tr>
+              {% endfor %}
+              
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock section %}

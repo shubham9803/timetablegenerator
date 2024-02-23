@@ -1,0 +1,84 @@
+{% extends "index.html" %}
+{% block section %}
+<div class="container-xl">
+  <div class="card card-md">
+    <div class="card-body">
+      <h2 class="h2 text-center mb-4">Add New Room</h2>
+      <form method="post" autocomplete="off" novalidate>
+        {% csrf_token %}  
+        <div class="mb-3">
+          <label class="form-label">Room Name</label>
+          <input type="input" name="rname" class="form-control" placeholder="Computer-1" autocomplete="off">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Room Number</label>
+            <input type="number" name="rnum" class="form-control" placeholder="101" autocomplete="off">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Room Capacity</label>
+            <input type="number" name="rcap" class="form-control" placeholder="60" autocomplete="off">
+        </div>
+        <div class="form-footer content-center">
+          <button type="submit" class="btn btn-primary w-2/4 ">Add New Room</button>
+        </div>
+      </form>
+    </div>
+   
+  </div>
+</div>
+<div class="container-xl mt-5">
+    <div class="card">
+      <div class="card-body">
+        <div id="table-default" class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th class="table-label" >ID</th>
+                <th class="table-label" >Room Name</th>
+                <th class="table-label" >Room Number</th>
+                <th class="table-label" >Room Capacity</th>
+                <th class="table-label" >Delete</th>
+              </tr>
+            </thead>
+            <tbody class="table-tbody">
+              {% for room in all_rooms %}
+              <tr>
+                <td class="sort-id">
+                    <div class="mb-3">
+                    {{room.id}}
+                    </div>
+                </td>
+                <td class="sort-id">
+                    <div class="mb-3">
+                    {{room.room_name}}
+                    </div>
+                </td>
+                <td class="sort-name">
+                    <div class="mb-3">
+                        {{room.room_number}}
+                    </div>
+                </td>
+                <td class="sort-name">
+                    <div class="mb-3">
+                        {{room.room_capacity}}
+                    </div>
+                </td>
+                <td class="sort-city">
+                    <form method="post" autocomplete="off" novalidate>
+                      {% csrf_token %}
+                        <div class="mb-3">
+                            <input type = "hidden" name='request_from_delete' value='{{room.id}}' />
+                            <button type="submit" class="btn btn-primary w-3/4">Delete Room</button>
+                          </div>
+                    </form> 
+                </td>
+              </tr>
+              {% endfor %}
+              
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock section %}

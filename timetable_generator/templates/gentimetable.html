@@ -1,0 +1,74 @@
+{% extends "index.html" %}
+{% block section %}
+<div class="container-xl">
+  <div class="card card-md">
+    <div class="card-body">
+      <h2 class="h2 text-center mb-4">Generate Time-Table</h2>
+      <form method="post" autocomplete="off" novalidate>
+        {% csrf_token %}
+          <div class="mb-3r">
+            <button type="submit" class="btn btn-primary w-100 ">Generate Time-Table</button>
+          </div>
+      </form>
+    </div>
+   
+  </div>
+</div>
+{% for section in sections %}
+<div class="container-xl mt-5">
+    <div class="card">
+        <div class="card-head">
+            <h2>{{section.name}} {{ section.department }}</h2>
+        </div>
+      <div class="card-body">
+        <div id="table-default" class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th class="table-label" >Class</th>
+                <th class="table-label" >Course</th>
+                <th class="table-label" >Venue</th>
+                <th class="table-label" >Teacher</th>
+                <th class="table-label" >Class Timing</th>
+              </tr>
+            </thead>
+            <tbody class="table-tbody">
+                {% for class in schedule %}
+                {% if class.section == section.id %}
+              <tr>
+                <td class="sort-id">
+                    <div class="mb-3">
+                        {{class.id}}
+                    </div>
+                </td>
+                <td class="sort-id">
+                    <div class="mb-3">
+                        {{class.course}}
+                    </div>
+                </td>
+                <td class="sort-name">
+                    <div class="mb-3">
+                        {{class.room.room_name}} {{class.room.room_number}}
+                    </div>
+                </td>
+                <td class="sort-name">
+                    <div class="mb-3">
+                        {{class.instructor}}
+                    </div>
+                </td>
+                <td class="sort-name">
+                    <div class="mb-3">
+                        {{class.meeting_time}}
+                    </div>
+                </td>
+              </tr>
+              {% endif %}
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  {% endblock section %}

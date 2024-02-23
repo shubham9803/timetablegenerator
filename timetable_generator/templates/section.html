@@ -1,0 +1,88 @@
+{% extends "index.html" %}
+{% block section %}
+<div class="container-xl">
+  <div class="card card-md">
+    <div class="card-body">
+      <h2 class="h2 text-center mb-4">Add New Section</h2>
+      <form method="post" autocomplete="off" novalidate>
+        {% csrf_token %}
+        <div class="mb-3">
+          <label class="form-label">Section Name</label>
+          <input type="fname" name="sname" class="form-control" placeholder="Suraj" autocomplete="off">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">No of Lecture per Week</label>
+            <input type="number" name="slec" class="form-control" placeholder="Suraj" autocomplete="off">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Section Department</label>
+            <select type="text" class="form-select" name="sdept" placeholder="Select tags" id="select-tags"  >
+              {% for dept in all_depts %}
+              <option value={{dept.id}}>{{dept}}</option>
+              {% endfor %}
+            </select>
+          </div>
+        <div class="form-footer content-center">
+          <button type="submit" class="btn btn-primary w-2/4 ">Add New Section</button>
+        </div>
+      </form>
+    </div>
+   
+  </div>
+</div>
+<div class="container-xl mt-5">
+    <div class="card">
+      <div class="card-body">
+        <div id="table-default" class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th class="table-label" >Section Unique ID</th>
+                <th class="table-label" >Section Name</th>
+                <th class="table-label" >Section Name</th>
+                <th class="table-label" >No of Lecture per Week</th>
+                <th class="table-label" >Delete</th>
+              </tr>
+            </thead>
+            <tbody class="table-tbody">
+              {% for section in all_sections %}
+              <tr>
+                <td class="sort-id">
+                    <div class="mb-3">
+                    {{section.id}}
+                    </div>
+                </td>
+                <td class="sort-id">
+                    <div class="mb-3">
+                   {{section.name}}
+                    </div>
+                </td>
+                <td class="sort-name">
+                    <div class="mb-3">
+                        {{section.department}}
+                    </div>
+                </td>
+                <td class="sort-name">
+                  <div class="mb-3">
+                      {{section.num_class_in_week}}
+                  </div>
+              </td>
+                <td class="sort-city">
+                    <form method="post" autocomplete="off" novalidate>
+                      {% csrf_token %}
+                        <div class="mb-3">
+                            <input type = "hidden" name='request_from_delete' value={{section.id}} />
+                            <button type="submit" class="btn btn-primary w-3/4">Delete Section</button>
+                          </div>
+                    </form> 
+                </td>
+              </tr>
+              {% endfor %}
+              
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock section %}

@@ -1,0 +1,90 @@
+{% extends "index.html" %}
+{% block section %}
+<div class="container-xl">
+  <div class="card card-md">
+    <div class="card-body">
+      <h2 class="h2 text-center mb-4">Add New Course</h2>
+      <form method="post" autocomplete="off" novalidate>
+        {% csrf_token %}
+        <div class="mb-3">
+          <label class="form-label">Course Name</label>
+          <input type="fname" name="cname" class="form-control" placeholder="Suraj" autocomplete="off">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Course Capacity</label>
+            <input type="lname" name="ccap" class="form-control" placeholder="Suraj" autocomplete="off">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Course Teacher</label>
+            <select type="text" class="form-select" name="cteachers" placeholder="Select tags" id="select-tags"  multiple>
+             {% for teacher in all_teachers %}
+             <option value={{teacher.id}}>{{teacher}}</option>
+             {% endfor %}
+            </select>
+          </div>
+        <div class="form-footer content-center">
+          <button type="submit" class="btn btn-primary w-2/4 ">Add New Teacher</button>
+        </div>
+      </form>
+    </div>
+   
+  </div>
+</div>
+<div class="container-xl mt-5">
+    <div class="card">
+      <div class="card-body">
+        <div id="table-default" class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th class="table-label" >Course Unique ID</th>
+                <th class="table-label" >Course Name</th>
+                <th class="table-label" >Course Capacity</th>
+                <th class="table-label" >Course Teacher</th>
+                <th class="table-label" >Delete</th>
+              </tr>
+            </thead>
+            <tbody class="table-tbody">
+              {% for course in all_courses %}
+              <tr>
+                <td class="sort-id">
+                    <div class="mb-3">
+                    {{course.id}}
+                    </div>
+                </td>
+                <td class="sort-id">
+                    <div class="mb-3">
+                    {{course.course_name}}
+                    </div>
+                </td>
+                <td class="sort-name">
+                    <div class="mb-3">
+                        {{course.max_numb_students}}
+                    </div>
+                </td>
+                <td class="sort-name">
+                    <div class="mb-3">
+                        {% for teacher in course.instructors.all %}
+                        <span>{{teacher}},</span>
+                        {% endfor %}
+                    </div>
+                </td>
+                <td class="sort-city">
+                    <form method="post" autocomplete="off" novalidate>
+                      {% csrf_token %}
+                        <div class="mb-3">
+                            <input type = "hidden" name ="request_from_delete" value={{course.id}} />
+                            <button type="submit" class="btn btn-primary w-3/4">Delete Course</button>
+                          </div>
+                    </form> 
+                </td>
+              </tr>
+              {% endfor %}
+             
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock section %}
